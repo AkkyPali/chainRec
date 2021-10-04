@@ -4,6 +4,8 @@ import pandas as pd
 import sys
 import os
 
+import tensorflow_addons as tfa
+
 DATA_DIR = "./data/"
 MODEL_DIR = "./models/"
 OUTPUT_DIR = "./results/"
@@ -137,9 +139,9 @@ class chainRec(object):
     
         logloss = - tf.reduce_sum(input_tensor=tf.math.log_sigmoid(x_pos) + neg_loss)
         valiloss = - tf.reduce_sum(input_tensor=tf.math.log_sigmoid(x_pos) - x_neg + tf.math.log_sigmoid(x_neg))
-        logloss0 = LAMBDA*l2_norm + logloss
+        logloss0 = lambda: (LAMBDA*l2_norm + logloss)
         
-        optimizer = tf.contrib.opt.LazyAdamOptimizer(LEARNING_RATE).minimize(logloss0)
+        optimizer = tfa.optimizers.LazyAdam(LEARNING_RATE).minimize(logloss0, var_list=[])
         
         return u, i, j, li, lj, s, logloss, optimizer, valiloss
             
