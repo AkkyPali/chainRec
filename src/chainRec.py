@@ -74,39 +74,39 @@ class chainRec(object):
 
     def model_constructor(self, n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE):
         
-        u = tf.placeholder(tf.int32, [None])
-        i = tf.placeholder(tf.int32, [None])
-        j = tf.placeholder(tf.int32, [None])
+        u = tf.compat.v1.placeholder(tf.int32, [None])
+        i = tf.compat.v1.placeholder(tf.int32, [None])
+        j = tf.compat.v1.placeholder(tf.int32, [None])
         
-        li = tf.placeholder(tf.int32, [None])
-        lj = tf.placeholder(tf.int32, [None])
+        li = tf.compat.v1.placeholder(tf.int32, [None])
+        lj = tf.compat.v1.placeholder(tf.int32, [None])
         li_onehot = tf.one_hot(li, n_stage)
         lj_onehot = tf.one_hot(lj+1, n_stage)
     
-        user_emb = tf.get_variable("user_emb", [n_user, HIDDEN_DIM], 
-                                   initializer=tf.random_uniform_initializer(-0.01, 0.01))
-        item_emb = tf.get_variable("item_emb", [n_item, HIDDEN_DIM], 
-                                   initializer=tf.random_uniform_initializer(-0.01, 0.01))
-        stage_emb = tf.get_variable("stage_emb", [n_stage, HIDDEN_DIM], 
-                                    initializer=tf.random_uniform_initializer(-0.01, 0.01))
-        item_bias = tf.get_variable("item_bias", [n_item, 1], initializer=tf.constant_initializer(0))
-        user_bias = tf.get_variable("user_bias", [n_user, 1], initializer=tf.constant_initializer(0))
-        b0 = tf.get_variable("global_bias", [1], initializer=tf.constant_initializer(0))
+        user_emb = tf.compat.v1.get_variable("user_emb", [n_user, HIDDEN_DIM], 
+                                   initializer=tf.compat.v1.random_uniform_initializer(-0.01, 0.01))
+        item_emb = tf.compat.v1.get_variable("item_emb", [n_item, HIDDEN_DIM], 
+                                   initializer=tf.compat.v1.random_uniform_initializer(-0.01, 0.01))
+        stage_emb = tf.compat.v1.get_variable("stage_emb", [n_stage, HIDDEN_DIM], 
+                                    initializer=tf.compat.v1.random_uniform_initializer(-0.01, 0.01))
+        item_bias = tf.compat.v1.get_variable("item_bias", [n_item, 1], initializer=tf.compat.v1.constant_initializer(0))
+        user_bias = tf.compat.v1.get_variable("user_bias", [n_user, 1], initializer=tf.compat.v1.constant_initializer(0))
+        b0 = tf.compat.v1.get_variable("global_bias", [1], initializer=tf.compat.v1.constant_initializer(0))
         
-        u_emb = tf.nn.embedding_lookup(user_emb, u)
-        i_emb = tf.nn.embedding_lookup(item_emb, i)
-        j_emb = tf.nn.embedding_lookup(item_emb, j)
+        u_emb = tf.nn.embedding_lookup(params=user_emb, ids=u)
+        i_emb = tf.nn.embedding_lookup(params=item_emb, ids=i)
+        j_emb = tf.nn.embedding_lookup(params=item_emb, ids=j)
         
-        i_b = tf.nn.embedding_lookup(item_bias, i)
-        j_b = tf.nn.embedding_lookup(item_bias, j)
-        u_b = tf.nn.embedding_lookup(user_bias, u)
+        i_b = tf.nn.embedding_lookup(params=item_bias, ids=i)
+        j_b = tf.nn.embedding_lookup(params=item_bias, ids=j)
+        u_b = tf.nn.embedding_lookup(params=user_bias, ids=u)
         
-        alpha0 = tf.get_variable("alpha", [1], initializer=tf.constant_initializer(1))
+        alpha0 = tf.compat.v1.get_variable("alpha", [1], initializer=tf.compat.v1.constant_initializer(1))
         alpha = tf.nn.relu(alpha0) + 1.0
     
-        u_emb0 = tf.multiply(tf.reshape(u_emb, [tf.shape(u_emb)[0], 1, HIDDEN_DIM]), 
+        u_emb0 = tf.multiply(tf.reshape(u_emb, [tf.shape(input=u_emb)[0], 1, HIDDEN_DIM]), 
                              tf.reshape(stage_emb, [1, n_stage, HIDDEN_DIM]))
-        item_us_emb = tf.transpose(tf.tensordot(u_emb0, item_emb, axes=[[2],[1]]), [0,2,1])
+        item_us_emb = tf.transpose(a=tf.tensordot(u_emb0, item_emb, axes=[[2],[1]]), perm=[0,2,1])
         item_us_emb = tf.nn.softplus(item_us_emb*alpha)/alpha
         s = tf.cumsum(item_us_emb, axis=2, reverse=True) + tf.reshape(item_bias, [1, n_item, 1])
     
@@ -117,26 +117,26 @@ class chainRec(object):
         dpj = tf.nn.softplus(dj*alpha)/alpha
         
         mask_first = tf.equal(lj, -1)
-        l_onehot_prev = tf.one_hot(tf.where(mask_first, tf.zeros_like(lj), lj), n_stage)
-        mj = tf.nn.softplus(tf.reduce_sum(tf.multiply(dj, l_onehot_prev), 1, keep_dims=True)*alpha)/alpha
-        mj = tf.log(tf.exp(mj) - 1 + 1e-10) - mj
-        mj = tf.where(mask_first, tf.zeros_like(mj), mj)
+        l_onehot_prev = tf.one_hot(tf.compat.v1.where(mask_first, tf.zeros_like(lj), lj), n_stage)
+        mj = tf.nn.softplus(tf.reduce_sum(input_tensor=tf.multiply(dj, l_onehot_prev), axis=1, keepdims=True)*alpha)/alpha
+        mj = tf.math.log(tf.exp(mj) - 1 + 1e-10) - mj
+        mj = tf.compat.v1.where(mask_first, tf.zeros_like(mj), mj)
         
         si = tf.multiply(tf.cumsum(dpi, axis=1, reverse=True), li_onehot)
         sj = tf.multiply(tf.cumsum(dpj, axis=1, reverse=True), lj_onehot)
         
-        x_pos = tf.reduce_sum(si, 1, keep_dims=True) + i_b + u_b + b0
-        x_neg = tf.reduce_sum(sj, 1, keep_dims=True) + j_b + u_b + b0
+        x_pos = tf.reduce_sum(input_tensor=si, axis=1, keepdims=True) + i_b + u_b + b0
+        x_neg = tf.reduce_sum(input_tensor=sj, axis=1, keepdims=True) + j_b + u_b + b0
 
-        l2_norm = tf.add_n([tf.reduce_sum(tf.multiply(u_emb, u_emb)), 
-                            tf.reduce_sum(tf.multiply(i_emb, i_emb)),
-                            tf.reduce_sum(tf.multiply(j_emb, j_emb))])
+        l2_norm = tf.add_n([tf.reduce_sum(input_tensor=tf.multiply(u_emb, u_emb)), 
+                            tf.reduce_sum(input_tensor=tf.multiply(i_emb, i_emb)),
+                            tf.reduce_sum(input_tensor=tf.multiply(j_emb, j_emb))])
                            
         mask_last = tf.equal(lj, n_stage-1)
-        neg_loss = tf.where(mask_last, tf.zeros_like(x_neg), - x_neg + tf.log_sigmoid(x_neg)) + mj
+        neg_loss = tf.compat.v1.where(mask_last, tf.zeros_like(x_neg), - x_neg + tf.math.log_sigmoid(x_neg)) + mj
     
-        logloss = - tf.reduce_sum(tf.log_sigmoid(x_pos) + neg_loss)
-        valiloss = - tf.reduce_sum(tf.log_sigmoid(x_pos) - x_neg + tf.log_sigmoid(x_neg))
+        logloss = - tf.reduce_sum(input_tensor=tf.math.log_sigmoid(x_pos) + neg_loss)
+        valiloss = - tf.reduce_sum(input_tensor=tf.math.log_sigmoid(x_pos) - x_neg + tf.math.log_sigmoid(x_neg))
         logloss0 = LAMBDA*l2_norm + logloss
         
         optimizer = tf.contrib.opt.LazyAdamOptimizer(LEARNING_RATE).minimize(logloss0)
@@ -162,11 +162,11 @@ class chainRec(object):
 
         print("start training "+MODEL_NAME+" ...")
         sys.stdout.flush()
-        config = tf.ConfigProto()
-        with tf.Graph().as_default(), tf.Session(config=config) as session:
+        config = tf.compat.v1.ConfigProto()
+        with tf.Graph().as_default(), tf.compat.v1.Session(config=config) as session:
             u, i, j, li, lj, s, logloss, optimizer, valiloss = self.model_constructor(n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE)
-            session.run(tf.global_variables_initializer())
-            saver = tf.train.Saver()
+            session.run(tf.compat.v1.global_variables_initializer())
+            saver = tf.compat.v1.train.Saver()
                 
             _loss_train_min = 1e10
             _loss_vali_min = 1e10
@@ -280,10 +280,10 @@ class chainRec(object):
         MODEL_NAME = self.MODEL_NAME
 
         target_stage_id = self.target_stage_id
-        with tf.Graph().as_default(), tf.Session() as session:
+        with tf.Graph().as_default(), tf.compat.v1.Session() as session:
             u, i, j, li, lj, s, logloss, optimizer, valiloss = self.model_constructor(n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE)
-            session.run(tf.global_variables_initializer())
-            saver = tf.train.Saver()
+            session.run(tf.compat.v1.global_variables_initializer())
+            saver = tf.compat.v1.train.Saver()
             saver.restore(session, MODEL_DIR + self.MODEL_NAME + ".model.ckpt")
             index_list = (data_test['max_stage_vali']>=target_stage_id) + (data_test['max_stage_test']>=target_stage_id)
             data_test_slice = data_test[index_list].values
@@ -293,4 +293,3 @@ class chainRec(object):
         print("AUC={:.3f}, NDCG={:.3f}, HR={:.3f} (validation)".format(res[0,0], res[0,1], res[0,2]))
         print("AUC={:.3f}, NDCG={:.3f}, HR={:.3f} (test)".format(res[1,0], res[1,1], res[1,2]))
         np.savetxt(OUTPUT_DIR + MODEL_NAME + ".stage"+str(target_stage_id) +".result.csv", res, delimiter=", ")
-        

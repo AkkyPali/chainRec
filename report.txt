@@ -1,0 +1,207 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 4 files
+Detected 27 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: src/bprMF.py
+--------------------------------------------------------------------------------
+src/bprMF.py:84:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/bprMF.py:86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/bprMF.py:88:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/bprMF.py:91:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/bprMF.py:92:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/bprMF.py:93:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/bprMF.py:94:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/bprMF.py:95:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/bprMF.py:110:20: WARNING: tf.contrib.opt.LazyAdamOptimizer requires manual check. (Manual edit required) `tf.contrib.opt.LazyAdamOptimizer` has been migrated to `tfa.optimizers.LazyAdam` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+src/bprMF.py:110:20: ERROR: Using member tf.contrib.opt.LazyAdamOptimizer in deprecated module tf.contrib. tf.contrib.opt.LazyAdamOptimizer cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+src/bprMF.py:176:20: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: src/chainRec.py
+--------------------------------------------------------------------------------
+src/chainRec.py:86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:88:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:90:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:92:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:93:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:94:13: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:96:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:97:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:98:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:100:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:101:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:102:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+src/chainRec.py:104:17: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/chainRec.py:142:20: WARNING: tf.contrib.opt.LazyAdamOptimizer requires manual check. (Manual edit required) `tf.contrib.opt.LazyAdamOptimizer` has been migrated to `tfa.optimizers.LazyAdam` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+src/chainRec.py:142:20: ERROR: Using member tf.contrib.opt.LazyAdamOptimizer in deprecated module tf.contrib. tf.contrib.opt.LazyAdamOptimizer cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+src/chainRec.py:208:20: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'src/'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'src/preprocess.py'
+ outputting to 'src_cp/preprocess.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/bprMF.py'
+ outputting to 'src_cp/bprMF.py'
+--------------------------------------------------------------------------------
+
+78:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+79:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+80:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+81:13: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+82:13: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+84:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+84:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+85:49: INFO: tf.random_uniform_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+85:49: INFO: Renamed 'tf.random_uniform_initializer' to 'tf.compat.v1.random_uniform_initializer'
+86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+86:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+87:49: INFO: tf.random_uniform_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+87:49: INFO: Renamed 'tf.random_uniform_initializer' to 'tf.compat.v1.random_uniform_initializer'
+88:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+88:20: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+89:44: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+89:44: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+91:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+91:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+92:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+92:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+93:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+93:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+94:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+94:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+95:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+95:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+99:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+99:16: INFO: Renamed keyword argument for tf.reduce_sum from keep_dims to keepdims
+100:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+100:16: INFO: Renamed keyword argument for tf.reduce_sum from keep_dims to keepdims
+102:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+103:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+104:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+106:20: INFO: Added keywords to args of function 'tf.reduce_sum'
+106:34: INFO: Renamed 'tf.log_sigmoid' to 'tf.math.log_sigmoid'
+110:20: WARNING: tf.contrib.opt.LazyAdamOptimizer requires manual check. (Manual edit required) `tf.contrib.opt.LazyAdamOptimizer` has been migrated to `tfa.optimizers.LazyAdam` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+110:20: ERROR: Using member tf.contrib.opt.LazyAdamOptimizer in deprecated module tf.contrib. tf.contrib.opt.LazyAdamOptimizer cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+133:17: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+134:38: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+136:24: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+137:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+176:20: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+251:38: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+253:24: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+254:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/dataset.py'
+ outputting to 'src_cp/dataset.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/chainRec.py'
+ outputting to 'src_cp/chainRec.py'
+--------------------------------------------------------------------------------
+
+77:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+78:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+79:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+81:13: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+82:13: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+86:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+87:47: INFO: tf.random_uniform_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+87:47: INFO: Renamed 'tf.random_uniform_initializer' to 'tf.compat.v1.random_uniform_initializer'
+88:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+88:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+89:47: INFO: tf.random_uniform_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+89:47: INFO: Renamed 'tf.random_uniform_initializer' to 'tf.compat.v1.random_uniform_initializer'
+90:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+90:20: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+91:48: INFO: tf.random_uniform_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+91:48: INFO: Renamed 'tf.random_uniform_initializer' to 'tf.compat.v1.random_uniform_initializer'
+92:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+92:20: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+92:74: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+92:74: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+93:20: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+93:20: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+93:74: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+93:74: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+94:13: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+94:13: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+94:61: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+94:61: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+96:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+96:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+97:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+97:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+98:16: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+98:16: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+100:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+100:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+101:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+101:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+102:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+102:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+104:17: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+104:17: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+104:59: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+104:59: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+107:48: INFO: Added keywords to args of function 'tf.shape'
+109:22: INFO: Added keywords to args of function 'tf.transpose'
+120:35: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+121:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+121:28: INFO: Renamed keyword argument for tf.reduce_sum from keep_dims to keepdims
+122:13: INFO: Renamed 'tf.log' to 'tf.math.log'
+123:13: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+128:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+128:16: INFO: Renamed keyword argument for tf.reduce_sum from keep_dims to keepdims
+129:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+129:16: INFO: Renamed keyword argument for tf.reduce_sum from keep_dims to keepdims
+131:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+132:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+133:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+136:19: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+136:71: INFO: Renamed 'tf.log_sigmoid' to 'tf.math.log_sigmoid'
+138:20: INFO: Added keywords to args of function 'tf.reduce_sum'
+138:34: INFO: Renamed 'tf.log_sigmoid' to 'tf.math.log_sigmoid'
+139:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+139:35: INFO: Renamed 'tf.log_sigmoid' to 'tf.math.log_sigmoid'
+139:67: INFO: Renamed 'tf.log_sigmoid' to 'tf.math.log_sigmoid'
+142:20: WARNING: tf.contrib.opt.LazyAdamOptimizer requires manual check. (Manual edit required) `tf.contrib.opt.LazyAdamOptimizer` has been migrated to `tfa.optimizers.LazyAdam` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+142:20: ERROR: Using member tf.contrib.opt.LazyAdamOptimizer in deprecated module tf.contrib. tf.contrib.opt.LazyAdamOptimizer cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+165:17: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+166:38: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+168:24: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+169:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+208:20: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+283:38: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+285:24: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+286:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+

@@ -75,35 +75,35 @@ class bprMF(object):
 
     def model_constructor(self, n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE):
         
-        u = tf.placeholder(tf.int32, [None])
-        i = tf.placeholder(tf.int32, [None])
-        j = tf.placeholder(tf.int32, [None])
-        li = tf.placeholder(tf.int32, [None])
-        lj = tf.placeholder(tf.int32, [None])
+        u = tf.compat.v1.placeholder(tf.int32, [None])
+        i = tf.compat.v1.placeholder(tf.int32, [None])
+        j = tf.compat.v1.placeholder(tf.int32, [None])
+        li = tf.compat.v1.placeholder(tf.int32, [None])
+        lj = tf.compat.v1.placeholder(tf.int32, [None])
     
-        user_emb = tf.get_variable("user_emb", [n_user, HIDDEN_DIM], 
-                                     initializer=tf.random_uniform_initializer(-0.01, 0.01))
-        item_emb = tf.get_variable("item_emb", [n_item, HIDDEN_DIM], 
-                                     initializer=tf.random_uniform_initializer(-0.01, 0.01))
-        item_bias = tf.get_variable("item_bias", [n_item, 1], 
-                                initializer=tf.constant_initializer(0))
+        user_emb = tf.compat.v1.get_variable("user_emb", [n_user, HIDDEN_DIM], 
+                                     initializer=tf.compat.v1.random_uniform_initializer(-0.01, 0.01))
+        item_emb = tf.compat.v1.get_variable("item_emb", [n_item, HIDDEN_DIM], 
+                                     initializer=tf.compat.v1.random_uniform_initializer(-0.01, 0.01))
+        item_bias = tf.compat.v1.get_variable("item_bias", [n_item, 1], 
+                                initializer=tf.compat.v1.constant_initializer(0))
         
-        u_emb = tf.nn.embedding_lookup(user_emb, u)
-        i_emb = tf.nn.embedding_lookup(item_emb, i)
-        j_emb = tf.nn.embedding_lookup(item_emb, j)
-        i_b = tf.nn.embedding_lookup(item_bias, i)
-        j_b = tf.nn.embedding_lookup(item_bias, j)
+        u_emb = tf.nn.embedding_lookup(params=user_emb, ids=u)
+        i_emb = tf.nn.embedding_lookup(params=item_emb, ids=i)
+        j_emb = tf.nn.embedding_lookup(params=item_emb, ids=j)
+        i_b = tf.nn.embedding_lookup(params=item_bias, ids=i)
+        j_b = tf.nn.embedding_lookup(params=item_bias, ids=j)
         
         s = tf.tensordot(u_emb, item_emb, axes=[[1],[1]]) + tf.reshape(item_bias, [1, n_item])
         
-        x_pos = tf.reduce_sum(tf.multiply(u_emb, i_emb), 1, keep_dims=True) + i_b
-        x_neg = tf.reduce_sum(tf.multiply(u_emb, j_emb), 1, keep_dims=True) + j_b
+        x_pos = tf.reduce_sum(input_tensor=tf.multiply(u_emb, i_emb), axis=1, keepdims=True) + i_b
+        x_neg = tf.reduce_sum(input_tensor=tf.multiply(u_emb, j_emb), axis=1, keepdims=True) + j_b
         
-        l2_norm = tf.add_n([tf.reduce_sum(tf.multiply(u_emb, u_emb)), 
-                            tf.reduce_sum(tf.multiply(i_emb, i_emb)),
-                            tf.reduce_sum(tf.multiply(j_emb, j_emb))])
+        l2_norm = tf.add_n([tf.reduce_sum(input_tensor=tf.multiply(u_emb, u_emb)), 
+                            tf.reduce_sum(input_tensor=tf.multiply(i_emb, i_emb)),
+                            tf.reduce_sum(input_tensor=tf.multiply(j_emb, j_emb))])
         
-        logloss = - tf.reduce_sum(tf.log_sigmoid(x_pos - x_neg))
+        logloss = - tf.reduce_sum(input_tensor=tf.math.log_sigmoid(x_pos - x_neg))
         valiloss = logloss
         logloss0 = LAMBDA*l2_norm + logloss
         
@@ -130,11 +130,11 @@ class bprMF(object):
 
         print("start training "+MODEL_NAME+" ...")
         sys.stdout.flush()
-        config = tf.ConfigProto()
-        with tf.Graph().as_default(), tf.Session(config=config) as session:
+        config = tf.compat.v1.ConfigProto()
+        with tf.Graph().as_default(), tf.compat.v1.Session(config=config) as session:
             u, i, j, li, lj, s, logloss, optimizer, valiloss = self.model_constructor(n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE)
-            session.run(tf.global_variables_initializer())
-            saver = tf.train.Saver()
+            session.run(tf.compat.v1.global_variables_initializer())
+            saver = tf.compat.v1.train.Saver()
                 
             _loss_train_min = 1e10
             _loss_vali_min = 1e10
@@ -248,10 +248,10 @@ class bprMF(object):
 
         target_stage_id = self.target_stage_id
         n_stage = self.n_stage
-        with tf.Graph().as_default(), tf.Session() as session:
+        with tf.Graph().as_default(), tf.compat.v1.Session() as session:
             u, i, j, li, lj, s, logloss, optimizer, valiloss = self.model_constructor(n_user, n_item, n_stage, HIDDEN_DIM, LAMBDA, LEARNING_RATE)
-            session.run(tf.global_variables_initializer())
-            saver = tf.train.Saver()
+            session.run(tf.compat.v1.global_variables_initializer())
+            saver = tf.compat.v1.train.Saver()
             saver.restore(session, MODEL_DIR + self.MODEL_NAME + ".model.ckpt")
             index_list = (data_test['max_stage_vali']>=target_stage_id) + (data_test['max_stage_test']>=target_stage_id)
             data_test_slice = data_test[index_list].values
